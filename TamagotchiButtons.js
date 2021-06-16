@@ -1,5 +1,6 @@
 let counter = 1;
 let feedingStatistics = 0;
+let timer = 0;
 
 class Button {
   constructor(x, y, width, height, message) {
@@ -48,12 +49,24 @@ function mouseClicked() {
   if (buttonWater.hitTest()) {
     console.log(counter);
     counter++;
-    feedingStatistics = -10;
+    feedingStatistics -= 10;
   }
+
   if (buttonFertilizer.hitTest()) {
     console.log(counter);
     counter++;
-    feedingStatistics = -20;
+    feedingStatistics -= 20; //nimmt den vorhandenen Wert der Variable und subtrahiert den gegebenen Wert
+  }
+
+  if (feedingStatistics <= -200) {
+    feedingStatistics = 0;
+    console.log("New State");
+  }
+}
+
+function Günther() {
+  if (timer > 10) {
+    console.log("Lose Screen");
   }
 }
 
@@ -68,4 +81,7 @@ function draw() {
   buttonFertilizer.display();
   buttonFertilizer.hitTest();
   bar.display();
+  Günther();
+  // timer += 1 / 12;
+  // console.log(timer);
 }
