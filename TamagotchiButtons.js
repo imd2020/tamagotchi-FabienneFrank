@@ -1,8 +1,4 @@
-let counter = 1;
-let feedingStatistics = 0;
-let timer = 0;
-
-class Button {
+export default class Button {
   constructor(x, y, width, height, message) {
     this.x = x;
     this.y = y;
@@ -34,62 +30,64 @@ class Button {
   }
 }
 
-class Data {
-  constructor(x, y, width, height) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-  }
-  display() {
-    push();
-    noFill(); //Rahmen
-    stroke(255);
-    strokeWeight(4);
-    rect(775, 180, 100, 250); //Rahmen
-    fill(255); //Anzeige
-    rect(this.x, this.y, this.width, feedingStatistics); //Anzeige
-    pop();
-  }
-}
+// export class Data {
+//   constructor(x, y, width, height) {
+//     this.x = x;
+//     this.y = y;
+//     this.width = width;
+//     this.height = height;
+//     this.feedingStatistics = 0;
+//     this.counter = 1;
+//     this.timer = 0;
+//   }
+//   display() {
+//     push();
+//     noFill(); //Rahmen
+//     stroke(255);
+//     strokeWeight(4);
+//     rect(775, 180, 100, 250); //Rahmen
+//     fill(255); //Anzeige
+//     rect(this.x, this.y, this.width, this.feedingStatistics); //Anzeige
+//     pop();
+//   }
+// }
 
-function mouseClicked() {
-  if (buttonWater.hitTest()) {
-    console.log(counter);
-    // counter++;
-    feedingStatistics -= 10;
-  }
+// let buttonWater = new Button(200, 700, 150, 50, "Wasser");
+// let buttonFertilizer = new Button(500, 700, 150, 50, "Dünger");
+// let bar = new Data(800, 400, 50);
 
-  if (buttonFertilizer.hitTest()) {
-    console.log(counter);
-    // counter++;
-    feedingStatistics -= 20; //nimmt den vorhandenen Wert der Variable und subtrahiert den gegebenen Wert
-  }
+// function mouseClicked() {
+//   if (buttonWater.hitTest()) {
+//     console.log(bar.counter);
+//     bar.feedingStatistics -= 10;
+//   }
 
-  if (feedingStatistics <= -200) {
-    feedingStatistics = 0;
-    console.log("New State");
-  }
-}
+//   if (buttonFertilizer.hitTest()) {
+//     console.log(bar.counter);
+//     bar.feedingStatistics -= 20; //nimmt den vorhandenen Wert der Variable und subtrahiert den gegebenen Wert
+//   }
 
-function gameTimer() {
-  if (timer > 10) {
-    console.log("Lose Screen");
-  }
-}
+//   if (bar.feedingStatistics <= -200) {
+//     bar.feedingStatistics = 0;
+//     console.log("New State");
+//   }
+// }
 
-let buttonWater = new Button(200, 700, 150, 50, "Wasser");
-let buttonFertilizer = new Button(500, 700, 150, 50, "Dünger");
-let bar = new Data(800, 400, 50, feedingStatistics);
+// function gameTimer() {
+//   if (bar.timer > 10) {
+//     console.log("Lose Screen");
+//     bar.feedingStatistics = +20; // Balken soll alle 10 Sek um 20 sinken
+//   }
+// }
 
-function draw() {
-  background(200, 200, 200);
-  buttonWater.display();
-  buttonWater.hitTest();
-  buttonFertilizer.display();
-  buttonFertilizer.hitTest();
-  bar.display();
-  gameTimer();
-  // timer += 1 / 12;
-  // console.log(timer);
-}
+// function draw() {
+//   background(200, 200, 200);
+//   buttonWater.display();
+//   buttonWater.hitTest();
+//   buttonFertilizer.display();
+//   buttonFertilizer.hitTest();
+//   bar.display();
+//   gameTimer();
+//   // bar.timer += 1 / 30; // 30 Bilder pro Sek
+//   // console.log(bar.timer);
+// }
