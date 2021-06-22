@@ -1,11 +1,9 @@
 export default class Data {
-  constructor(x, y, width, height) {
+  constructor(x, y, width) {
     this.x = x;
     this.y = y;
     this.width = width;
-    this.height = height;
-    this.feedingStatistics = 0;
-    this.counter = 1;
+    this.feedingStatistics = 0; //height
     this.timer = 0;
   }
   display() {
