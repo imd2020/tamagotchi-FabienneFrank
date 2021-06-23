@@ -3,7 +3,7 @@ export default class Data {
     this.x = x;
     this.y = y;
     this.width = width;
-    this.feedingStatistics = 0; //height
+    this.feedingStatistics = -20; //height
     this.timer = 0;
   }
   display() {
