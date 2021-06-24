@@ -3,6 +3,7 @@ window.draw = draw;
 
 import Button from "./TamagotchiButtons.js";
 import Data from "./TamagotchiData.js";
+// import gsap from "./gsap.min.js";
 
 let StartBackground = loadImage("StartScreen.png");
 let InstructionScreen = loadImage("InstructionScreen.png");
@@ -18,18 +19,18 @@ let buttonLetsGo = new Button(380, 800, 150, 50, "Let's Go!", 405, 835);
 let buttonWater = new Button(750, 600, 150, 50, "Water", 792, 635);
 let buttonFertilizer = new Button(750, 700, 150, 50, "Fertilizer", 778, 735);
 let bar = new Data(800, 400, 50);
-let buttonReplay = new Button(100, 100, 150, 50, "Try Again?", 118, 134);
+let buttonReplay = new Button(100, 100, 150, 50, "Try Again?", 115, 134);
 let buttonGoodJob = new Button(425, 450, 150, 50, "Good Job!", 445, 483);
 let state = "start";
 
 function mouseClicked() {
   if (buttonWater.hitTest()) {
-    bar.feedingStatistics -= 20;
+    bar.feedingStatistics -= 10;
     bar.timer = 0; //Timer wird nach jedem Klicken auf 0 gesetzt
   }
 
   if (buttonFertilizer.hitTest()) {
-    bar.feedingStatistics -= 40; //nimmt den vorhandenen Wert der Variable und subtrahiert den gegebenen Wert
+    bar.feedingStatistics -= 20; //nimmt den vorhandenen Wert der Variable und subtrahiert den gegebenen Wert
     bar.timer = 0; //Timer wird nach jedem Klicken auf 0 gesetzt
   }
 
@@ -39,43 +40,47 @@ function mouseClicked() {
 
   if (state === "instruction" && buttonLetsGo.hitTest()) {
     state = "game1";
+    bar.feedingStatistics = -20;
   }
 
   if (state === "scoreWin" && buttonGoodJob.hitTest()) {
     state = "instruction";
+    bar.feedingStatistics -= 20;
   }
   if (state === "scoreLose" && buttonReplay.hitTest()) {
     state = "instruction";
-  }
-
-  if (state === "game1" && bar.feedingStatistics <= -200) {
-    state = "game2";
-  } else if (bar.feedingStatistics >= 0) {
-    state = "scoreLose";
-  }
-
-  if (state === "game2" && bar.feedingStatistics <= -200) {
-    state = "game3";
-  } else if (bar.feedingStatistics >= 0) {
-    state = "scoreLose";
-  }
-
-  if (state === "game3" && bar.feedingStatistics <= -200) {
-    state = "scoreWin";
-  } else if (bar.feedingStatistics >= 0) {
-    state = "scoreLose";
   }
 }
 
 function gameTimer() {
   bar.timer += 1 / 60;
 
-  if (bar.timer > 5 && bar.feedingStatistics < 0) {
+  if (bar.timer > 5) {
     //damit der Balken nicht un den +Bereich rutscht
     bar.feedingStatistics += 20; //Balken soll alle 10 Sek um 20 sinken
     bar.timer = 0; ////Timer wird nach jedem +20 wieder auf 0 gesetzt
-    // state = "scoreLose";
   }
+
+  if (state === "game1" && bar.feedingStatistics <= -200) {
+    state = "game2";
+    bar.feedingStatistics = -20;
+  }
+
+  if (state === "game2" && bar.feedingStatistics <= -200) {
+    state = "game3";
+    bar.feedingStatistics = -20;
+  }
+
+  if (state === "game3" && bar.feedingStatistics <= -200) {
+    state = "scoreWin";
+    bar.feedingStatistics = -20;
+  }
+
+  if (bar.feedingStatistics >= 0) {
+    state = "scoreLose";
+    bar.feedingStatistics = -20;
+  }
+  console.log(bar.feedingStatistics);
 }
 
 function startScreen() {
@@ -126,8 +131,31 @@ function endScreenLose() {
   buttonReplay.display();
 }
 
+gsap.to(buttonStart, {
+  duration: 3,
+  ease: "bounce",
+  x: 800,
+  y: 650,
+  //hin zu 800/650
+  xMouse: 850,
+  yMouse: 683,
+
+  onComplete: () => {
+    gsap.to(buttonStart, {
+      duration: 0.5,
+      ease: "sine",
+      x: 425,
+      y: 650,
+      //zurück zu 425/650
+      xMouse: 470,
+      yMouse: 683,
+    });
+  },
+});
+
 function draw() {
   // console.log(bar.feedingStatistics);
+  clear();
   if (state === "start") {
     startScreen();
   } else if (state === "instruction") {
